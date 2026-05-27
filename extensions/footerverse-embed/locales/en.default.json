@@ -1,0 +1,11 @@
+{
+  "footerverse": {
+    "embed": {
+      "name": "FooterVerse Footer",
+      "hide_theme_footer": {
+        "label": "Hide default theme footer",
+        "info": "Hides your theme's built-in footer so only the FooterVerse footer is shown."
+      }
+    }
+  }
+}

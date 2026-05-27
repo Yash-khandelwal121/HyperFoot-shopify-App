@@ -1,0 +1,1007 @@
+/* Storefront Styles for FooterVerse Templates */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@300..700&display=swap');
+
+:root {
+  --fv-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --fv-font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --fv-font-serif: 'Playfair Display', Georgia, serif;
+  --fv-font-mono: 'Space Grotesk', monospace;
+}
+
+/* Base Styles */
+.footerverse-sandbox {
+  font-family: var(--fv-font-sans);
+  line-height: 1.6;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+.footerverse-sandbox *, 
+.footerverse-sandbox *::before, 
+.footerverse-sandbox *::after {
+  box-sizing: border-box;
+}
+
+/* Common Components */
+.fv-social-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fv-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  text-decoration: none;
+  border: 1px solid;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: var(--fv-transition);
+}
+
+.fv-newsletter-form {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  gap: 8px;
+}
+
+.fv-newsletter-input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  background: transparent;
+  transition: var(--fv-transition);
+}
+
+.fv-newsletter-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: var(--fv-transition);
+}
+
+.fv-payment-icons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fv-payment-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 4px 8px;
+  transition: var(--fv-transition);
+}
+
+.fv-payment-icon.light-theme {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   1. ZENITH MINIMAL FOOTER (FREE)
+   ========================================================================== */
+.fv-minimal {
+  padding: 48px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.fv-minimal .fv-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.fv-minimal .fv-logo {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.fv-minimal .fv-links {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fv-minimal .fv-links a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.7;
+  transition: var(--fv-transition);
+}
+
+.fv-minimal .fv-links a:hover {
+  opacity: 1;
+}
+
+.fv-minimal .fv-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.fv-minimal .fv-copy {
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   2. SLEEK COMMERCE FOOTER (STARTER - $50)
+   ========================================================================== */
+.fv-ecommerce {
+  padding: 64px 24px 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fv-ecommerce .fv-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fv-ecommerce .fv-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 991px) {
+  .fv-ecommerce .fv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .fv-ecommerce .fv-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fv-ecommerce .fv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fv-ecommerce .fv-logo {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.fv-ecommerce .fv-col-heading {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.fv-ecommerce .fv-text {
+  font-size: 14px;
+  opacity: 0.7;
+  line-height: 1.6;
+}
+
+.fv-ecommerce .fv-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fv-ecommerce .fv-menu a {
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: var(--fv-transition);
+}
+
+.fv-ecommerce .fv-menu a:hover {
+  opacity: 1;
+  padding-left: 4px;
+}
+
+.fv-ecommerce .fv-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* ==========================================================================
+   3. COSMIC NEON / DARK TECH STARTUP FOOTER (STARTER - $50)
+   ========================================================================== */
+.fv-gradient {
+  padding: 80px 24px 40px;
+  background: #09090b;
+  color: #fafafa;
+  position: relative;
+  overflow: hidden;
+  border-top: 2px solid;
+  border-image: linear-gradient(to right, #a855f7, #ec4899) 1;
+}
+
+.fv-gradient::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  right: -150px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.fv-gradient .fv-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.fv-gradient .fv-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 48px;
+  margin-bottom: 64px;
+}
+
+@media (max-width: 991px) {
+  .fv-gradient .fv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .fv-gradient .fv-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fv-gradient .fv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fv-gradient .fv-logo {
+  font-family: var(--fv-font-mono);
+  font-size: 26px;
+  font-weight: 700;
+  background: linear-gradient(to right, #c084fc, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fv-gradient .fv-col-heading {
+  font-family: var(--fv-font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c084fc;
+}
+
+.fv-gradient .fv-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fv-gradient .fv-menu a {
+  color: #d4d4d8;
+  text-decoration: none;
+  font-size: 14px;
+  transition: var(--fv-transition);
+  position: relative;
+}
+
+.fv-gradient .fv-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  transition: var(--fv-transition);
+}
+
+.fv-gradient .fv-menu a:hover {
+  color: #fafafa;
+}
+
+.fv-gradient .fv-menu a:hover::after {
+  width: 100%;
+}
+
+.fv-gradient .fv-newsletter-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fafafa;
+}
+
+.fv-gradient .fv-newsletter-input:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.fv-gradient .fv-newsletter-btn {
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  color: #ffffff;
+}
+
+.fv-gradient .fv-newsletter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+}
+
+.fv-gradient .fv-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  color: #a1a1aa;
+  font-size: 13px;
+}
+
+.fv-gradient .fv-social-link {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fv-gradient .fv-social-link:hover {
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  border-color: transparent;
+  transform: scale(1.1) rotate(6deg);
+}
+
+/* ==========================================================================
+   4. CREATIVE AGENCY FOOTER (BUSINESS - $70)
+   ========================================================================== */
+.fv-agency {
+  padding: 96px 24px 48px;
+  background: #000000;
+  color: #ffffff;
+}
+
+.fv-agency .fv-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fv-agency .fv-cta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding-bottom: 64px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  margin-bottom: 64px;
+}
+
+.fv-agency .fv-cta-title {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  max-width: 500px;
+}
+
+@media (max-width: 767px) {
+  .fv-agency .fv-cta-title {
+    font-size: 32px;
+  }
+}
+
+.fv-agency .fv-cta-btn {
+  padding: 16px 36px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 100px;
+  border: 2px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: var(--fv-transition);
+}
+
+.fv-agency .fv-cta-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+.fv-agency .fv-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 48px;
+  margin-bottom: 64px;
+}
+
+@media (max-width: 991px) {
+  .fv-agency .fv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .fv-agency .fv-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fv-agency .fv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fv-agency .fv-logo {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.fv-agency .fv-col-heading {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #a1a1aa;
+}
+
+.fv-agency .fv-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fv-agency .fv-menu a {
+  color: #e4e4e7;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: var(--fv-transition);
+}
+
+.fv-agency .fv-menu a:hover {
+  color: #ffffff;
+  padding-left: 8px;
+}
+
+.fv-agency .fv-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 14px;
+  color: #a1a1aa;
+}
+
+.fv-agency .fv-social-link {
+  background: #ffffff;
+  color: #000000;
+}
+
+.fv-agency .fv-social-link:hover {
+  background: transparent;
+  color: #ffffff;
+  box-shadow: 0 0 0 2px #ffffff;
+  transform: rotate(-10deg) scale(1.1);
+}
+
+/* ==========================================================================
+   5. ELEGANT PREMIUM BRAND FOOTER (BUSINESS - $70)
+   ========================================================================== */
+.fv-premium {
+  padding: 80px 24px 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fafafa;
+}
+
+.fv-premium .fv-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fv-premium .fv-upper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 48px;
+}
+
+.fv-premium .fv-upper-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fv-premium .fv-upper-title {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.fv-premium .fv-upper-text {
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.fv-premium .fv-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 991px) {
+  .fv-premium .fv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .fv-premium .fv-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fv-premium .fv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fv-premium .fv-col-heading {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111111;
+}
+
+.fv-premium .fv-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fv-premium .fv-menu a {
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.6;
+  transition: var(--fv-transition);
+}
+
+.fv-premium .fv-menu a:hover {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.fv-premium .fv-trust-badges {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.fv-premium .fv-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111111;
+}
+
+.fv-premium .fv-badge svg {
+  width: 20px;
+  height: 20px;
+  color: #000;
+}
+
+.fv-premium .fv-bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+.fv-premium .fv-social-link {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.fv-premium .fv-social-link:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   6. LUXURY FASHION BRAND FOOTER (PREMIUM - $100)
+   ========================================================================== */
+.fv-luxury {
+  padding: 100px 24px 48px;
+  background: #ffffff;
+  color: #1a1a1a;
+  border-top: 1px solid #eaeaea;
+}
+
+.fv-luxury .fv-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fv-luxury .fv-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.fv-luxury .fv-logo {
+  font-family: var(--fv-font-serif);
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.fv-luxury .fv-subtitle {
+  font-family: var(--fv-font-sans);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.fv-luxury .fv-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+  margin-bottom: 80px;
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  padding: 60px 0;
+}
+
+@media (max-width: 991px) {
+  .fv-luxury .fv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .fv-luxury .fv-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fv-luxury .fv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fv-luxury .fv-col-heading {
+  font-family: var(--fv-font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.fv-luxury .fv-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fv-luxury .fv-menu a {
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  transition: var(--fv-transition);
+}
+
+.fv-luxury .fv-menu a:hover {
+  opacity: 1;
+  letter-spacing: 2px;
+}
+
+.fv-luxury .fv-newsletter-form {
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 6px;
+  max-width: 320px;
+}
+
+.fv-luxury .fv-newsletter-input {
+  border: none;
+  padding: 8px 0;
+  border-radius: 0;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.fv-luxury .fv-newsletter-btn {
+  background: transparent;
+  border: none;
+  padding: 0 8px;
+  font-size: 18px;
+}
+
+.fv-luxury .fv-newsletter-btn:hover {
+  transform: translateX(4px);
+}
+
+.fv-luxury .fv-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  opacity: 0.6;
+}
+
+.fv-luxury .fv-social-link {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid #1a1a1a;
+}
+
+.fv-luxury .fv-social-link:hover {
+  background: #1a1a1a;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   7. ULTRA LUXURY ANIMATED FOOTER (PREMIUM - $100)
+   ========================================================================== */
+.fv-ultra-luxury {
+  padding: 100px 24px 48px;
+  background: #080710;
+  color: #f3f4f6;
+  position: relative;
+  overflow: hidden;
+}
+
+.fv-ultra-luxury::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.fv-ultra-luxury .fv-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.fv-ultra-luxury .fv-glass-panel {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 60px;
+  margin-bottom: 60px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  transition: var(--fv-transition);
+}
+
+.fv-ultra-luxury .fv-glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px rgba(99, 102, 241, 0.08);
+}
+
+.fv-ultra-luxury .fv-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 48px;
+}
+
+@media (max-width: 991px) {
+  .fv-ultra-luxury .fv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .fv-ultra-luxury .fv-glass-panel {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 575px) {
+  .fv-ultra-luxury .fv-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fv-ultra-luxury .fv-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fv-ultra-luxury .fv-logo {
+  font-family: var(--fv-font-serif);
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: 5px;
+  background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fv-ultra-luxury .fv-col-heading {
+  font-family: var(--fv-font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #818cf8;
+}
+
+.fv-ultra-luxury .fv-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fv-ultra-luxury .fv-menu a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #9ca3af;
+  transition: var(--fv-transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0px;
+}
+
+.fv-ultra-luxury .fv-menu a:hover {
+  color: #ffffff;
+  gap: 8px;
+}
+
+.fv-ultra-luxury .fv-menu a:hover::before {
+  content: '→';
+  color: #818cf8;
+}
+
+.fv-ultra-luxury .fv-newsletter-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-radius: 12px;
+}
+
+.fv-ultra-luxury .fv-newsletter-input:focus {
+  border-color: #818cf8;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.fv-ultra-luxury .fv-newsletter-btn {
+  background: #ffffff;
+  color: #080710;
+  border-radius: 12px;
+}
+
+.fv-ultra-luxury .fv-newsletter-btn:hover {
+  background: #818cf8;
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(129, 140, 248, 0.3);
+}
+
+.fv-ultra-luxury .fv-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.fv-ultra-luxury .fv-social-link {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.fv-ultra-luxury .fv-social-link:hover {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: #818cf8;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(129, 140, 248, 0.4);
+  transform: translateY(-5px);
+}
+
+.fv-col-heading {
+  color: var(--fv-heading) !important;
+}

@@ -1,0 +1,355 @@
+{{ 'footerverse.css' | asset_url | stylesheet_tag }}
+
+{% assign fv_raw = shop.metafields.footerverse.settings.value %}
+
+{% if fv_raw != blank %}
+  {% assign f_id = fv_raw.installedFooterId | default: '1' %}
+  {% assign fv = fv_raw %}
+
+  <div
+    id="footerverse-root"
+    style="
+      --fv-bg: {{ fv.colors.background | default: '#1a1a1a' }};
+      --fv-text: {{ fv.colors.text | default: '#ffffff' }};
+      --fv-accent: {{ fv.colors.accent | default: '#818cf8' }};
+      --fv-icon: {{ fv.colors.icon | default: '#ffffff' }};
+      --fv-heading: {{ fv.colors.heading | default: fv.colors.text | default: '#ffffff' }};
+      background-color: var(--fv-bg);
+      color: var(--fv-text);
+    "
+  >
+
+    {%- comment -%} ====================================================
+        FOOTER 1 — ZENITH MINIMAL (FREE)
+    ==================================================== {%- endcomment -%}
+    {% if f_id == '1' %}
+      <footer class="footerverse-sandbox fv-minimal">
+        <div class="fv-container">
+          {% if fv.visibleBlocks.brand %}
+            <div class="fv-logo" style="color:var(--fv-accent)">
+              {% if fv.brand.logoUrl != blank %}
+                <img src="{{ fv.brand.logoUrl }}" alt="{{ fv.brand.title }}" width="160" height="40" style="max-height:40px;width:auto">
+              {% else %}
+                {{ fv.brand.title }}
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if fv.visibleBlocks.quickLinks %}
+            <ul class="fv-links">
+              {% for link in fv.links.quickLinks %}
+                <li><a href="{{ link.url }}" style="color:var(--fv-text)">{{ link.label }}</a></li>
+              {% endfor %}
+              {% for link in fv.links.supportLinks %}
+                <li><a href="{{ link.url }}" style="color:var(--fv-text)">{{ link.label }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <div class="fv-bottom">
+            <span class="fv-copy">&copy; {{ 'now' | date: '%Y' }} {{ fv.brand.title }}. All rights reserved.</span>
+            {% if fv.visibleBlocks.socials %}
+              <div class="fv-social-links">
+                {% for social in fv.socials %}
+                  {% if social[1] != blank and social[1] != '#' %}
+                    <a href="{{ social[1] }}" class="fv-social-link" style="color:var(--fv-icon);border-color:var(--fv-icon)">
+                      {{ social[0] | upcase | slice: 0, 2 }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </footer>
+    {% endif %}
+
+    {%- comment -%} ====================================================
+        FOOTER 2 — SLEEK COMMERCE (STARTER)
+    ==================================================== {%- endcomment -%}
+    {% if f_id == '2' %}
+      <footer class="footerverse-sandbox fv-ecommerce">
+        <div class="fv-container">
+          <div class="fv-grid">
+            {% if fv.visibleBlocks.brand %}
+              <div class="fv-col">
+                <div class="fv-logo" style="color:var(--fv-accent)">{{ fv.brand.title }}</div>
+                <p class="fv-text">{{ fv.brand.description }}</p>
+                {% if fv.visibleBlocks.socials %}
+                  <div class="fv-social-links">
+                    {% for social in fv.socials %}
+                      {% if social[1] != blank and social[1] != '#' %}
+                        <a href="{{ social[1] }}" class="fv-social-link" style="color:var(--fv-icon);border-color:var(--fv-icon)">{{ social[0] | upcase | slice: 0, 2 }}</a>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+            {% if fv.visibleBlocks.quickLinks %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">Shop</h4>
+                <ul class="fv-menu">{% for l in fv.links.quickLinks %}<li><a href="{{ l.url }}" style="color:var(--fv-text)">{{ l.label }}</a></li>{% endfor %}</ul>
+              </div>
+            {% endif %}
+            {% if fv.visibleBlocks.supportLinks %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">Support</h4>
+                <ul class="fv-menu">{% for l in fv.links.supportLinks %}<li><a href="{{ l.url }}" style="color:var(--fv-text)">{{ l.label }}</a></li>{% endfor %}</ul>
+              </div>
+            {% endif %}
+            {% if fv.visibleBlocks.newsletter %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">{{ fv.newsletter.title }}</h4>
+                <p class="fv-text">{{ fv.newsletter.subtitle }}</p>
+                <div class="fv-newsletter-form">
+                  <input type="email" placeholder="{{ fv.newsletter.placeholder }}" class="fv-newsletter-input" style="color:var(--fv-text)">
+                  <button class="fv-newsletter-btn" style="background:var(--fv-accent);color:#fff">{{ fv.newsletter.btnText }}</button>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="fv-bottom">
+            <span>&copy; {{ 'now' | date: '%Y' }} {{ fv.brand.title }}</span>
+            {% if fv.visibleBlocks.payments %}
+              <div class="fv-payment-icons">
+                {% for p in fv.payments %}{% if p[1] %}<div class="fv-payment-icon"><span style="font-size:9px;font-weight:700;text-transform:uppercase">{{ p[0] }}</span></div>{% endif %}{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </footer>
+    {% endif %}
+
+    {%- comment -%} ====================================================
+        FOOTER 3 — DARK TECH STARTUP (STARTER)
+    ==================================================== {%- endcomment -%}
+    {% if f_id == '3' %}
+      <footer class="footerverse-sandbox fv-gradient">
+        <div class="fv-container">
+          <div class="fv-grid">
+            {% if fv.visibleBlocks.brand %}
+              <div class="fv-col">
+                <div class="fv-logo">{{ fv.brand.title }}</div>
+                <p style="font-size:14px;color:#a1a1aa">{{ fv.brand.description }}</p>
+                {% if fv.visibleBlocks.socials %}
+                  <div class="fv-social-links">{% for s in fv.socials %}{% if s[1] != blank and s[1] != '#' %}<a href="{{ s[1] }}" class="fv-social-link">{{ s[0] | upcase | slice: 0, 2 }}</a>{% endif %}{% endfor %}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+            {% if fv.visibleBlocks.quickLinks %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">Product</h4>
+                <ul class="fv-menu">{% for l in fv.links.quickLinks %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul>
+              </div>
+            {% endif %}
+            {% if fv.visibleBlocks.supportLinks %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">Developers</h4>
+                <ul class="fv-menu">{% for l in fv.links.supportLinks %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul>
+              </div>
+            {% endif %}
+            {% if fv.visibleBlocks.newsletter %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">Newsletter</h4>
+                <div class="fv-newsletter-form">
+                  <input type="email" placeholder="{{ fv.newsletter.placeholder }}" class="fv-newsletter-input">
+                  <button class="fv-newsletter-btn">{{ fv.newsletter.btnText }}</button>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="fv-bottom">
+            <span>&copy; {{ 'now' | date: '%Y' }} {{ fv.brand.title }}. Infinite tech solutions.</span>
+            {% if fv.visibleBlocks.payments %}<div class="fv-payment-icons">{% for p in fv.payments %}{% if p[1] %}<div class="fv-payment-icon"><span style="font-size:9px;font-weight:700;text-transform:uppercase">{{ p[0] }}</span></div>{% endif %}{% endfor %}</div>{% endif %}
+          </div>
+        </div>
+      </footer>
+    {% endif %}
+
+    {%- comment -%} ====================================================
+        FOOTER 4 — CREATIVE AGENCY (BUSINESS)
+    ==================================================== {%- endcomment -%}
+    {% if f_id == '4' %}
+      <footer class="footerverse-sandbox fv-agency">
+        <div class="fv-container">
+          <div class="fv-cta-row">
+            <h2 class="fv-cta-title">Let's create something remarkable together.</h2>
+            <button class="fv-cta-btn">Get In Touch</button>
+          </div>
+          <div class="fv-grid">
+            {% if fv.visibleBlocks.brand %}
+              <div class="fv-col">
+                <div class="fv-logo" style="color:var(--fv-accent)">{{ fv.brand.title }}</div>
+                <p style="color:#a1a1aa;font-size:15px">{{ fv.brand.description }}</p>
+                {% if fv.visibleBlocks.socials %}<div class="fv-social-links">{% for s in fv.socials %}{% if s[1] != blank and s[1] != '#' %}<a href="{{ s[1] }}" class="fv-social-link">{{ s[0] | upcase | slice: 0, 2 }}</a>{% endif %}{% endfor %}</div>{% endif %}
+              </div>
+            {% endif %}
+            {% if fv.visibleBlocks.quickLinks %}
+              <div class="fv-col"><h4 class="fv-col-heading">Work</h4><ul class="fv-menu">{% for l in fv.links.quickLinks %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if fv.visibleBlocks.supportLinks %}
+              <div class="fv-col"><h4 class="fv-col-heading">Info</h4><ul class="fv-menu">{% for l in fv.links.supportLinks %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul></div>
+            {% endif %}
+            {% if fv.visibleBlocks.newsletter %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">Join The List</h4>
+                <div class="fv-newsletter-form">
+                  <input type="email" placeholder="{{ fv.newsletter.placeholder }}" class="fv-newsletter-input" style="border:1px solid rgba(255,255,255,0.2);color:#fff">
+                  <button class="fv-newsletter-btn" style="background:#fff;color:#000">{{ fv.newsletter.btnText }}</button>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="fv-bottom">
+            <span>&copy; {{ 'now' | date: '%Y' }} {{ fv.brand.title }}. Creative designs verified.</span>
+            {% if fv.visibleBlocks.payments %}<div class="fv-payment-icons">{% for p in fv.payments %}{% if p[1] %}<div class="fv-payment-icon"><span style="font-size:9px;font-weight:700;text-transform:uppercase">{{ p[0] }}</span></div>{% endif %}{% endfor %}</div>{% endif %}
+          </div>
+        </div>
+      </footer>
+    {% endif %}
+
+    {%- comment -%} ====================================================
+        FOOTER 5 — ELEGANT PREMIUM BRAND (BUSINESS)
+    ==================================================== {%- endcomment -%}
+    {% if f_id == '5' %}
+      <footer class="footerverse-sandbox fv-premium">
+        <div class="fv-container">
+          <div class="fv-upper">
+            <div class="fv-upper-left">
+              <h3 class="fv-upper-title">{{ fv.newsletter.title }}</h3>
+              <p class="fv-upper-text">{{ fv.newsletter.subtitle }}</p>
+            </div>
+            {% if fv.visibleBlocks.newsletter %}
+              <div class="fv-newsletter-form">
+                <input type="email" placeholder="{{ fv.newsletter.placeholder }}" class="fv-newsletter-input" style="border-color:rgba(0,0,0,0.15);color:#000">
+                <button class="fv-newsletter-btn" style="background:var(--fv-accent);color:#fff">{{ fv.newsletter.btnText }}</button>
+              </div>
+            {% endif %}
+          </div>
+          <div class="fv-grid">
+            {% if fv.visibleBlocks.brand %}<div class="fv-col"><div class="fv-logo" style="color:#000">{{ fv.brand.title }}</div><p style="font-size:14px;opacity:0.7">{{ fv.brand.description }}</p>{% if fv.visibleBlocks.socials %}<div class="fv-social-links">{% for s in fv.socials %}{% if s[1] != blank and s[1] != '#' %}<a href="{{ s[1] }}" class="fv-social-link">{{ s[0] | upcase | slice: 0, 2 }}</a>{% endif %}{% endfor %}</div>{% endif %}</div>{% endif %}
+            {% if fv.visibleBlocks.quickLinks %}<div class="fv-col"><h4 class="fv-col-heading">Collection</h4><ul class="fv-menu">{% for l in fv.links.quickLinks %}<li><a href="{{ l.url }}" style="color:var(--fv-text)">{{ l.label }}</a></li>{% endfor %}</ul></div>{% endif %}
+            {% if fv.visibleBlocks.supportLinks %}<div class="fv-col"><h4 class="fv-col-heading">Customer Care</h4><ul class="fv-menu">{% for l in fv.links.supportLinks %}<li><a href="{{ l.url }}" style="color:var(--fv-text)">{{ l.label }}</a></li>{% endfor %}</ul></div>{% endif %}
+            {% if fv.visibleBlocks.trustBadges %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">Store Guarantee</h4>
+                <div class="fv-trust-badges">
+                  <div class="fv-badge">&#10003; {{ fv.trustBadges.badge1 }}</div>
+                  <div class="fv-badge">&#10003; {{ fv.trustBadges.badge2 }}</div>
+                  <div class="fv-badge">&#10003; {{ fv.trustBadges.badge3 }}</div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="fv-bottom">
+            <span>&copy; {{ 'now' | date: '%Y' }} {{ fv.brand.title }}. All rights reserved.</span>
+            {% if fv.visibleBlocks.payments %}<div class="fv-payment-icons">{% for p in fv.payments %}{% if p[1] %}<div class="fv-payment-icon light-theme"><span style="font-size:9px;font-weight:700;text-transform:uppercase">{{ p[0] }}</span></div>{% endif %}{% endfor %}</div>{% endif %}
+          </div>
+        </div>
+      </footer>
+    {% endif %}
+
+    {%- comment -%} ====================================================
+        FOOTER 6 — LUXURY FASHION BRAND (PREMIUM)
+    ==================================================== {%- endcomment -%}
+    {% if f_id == '6' %}
+      <footer class="footerverse-sandbox fv-luxury">
+        <div class="fv-container">
+          <div class="fv-header">
+            <div class="fv-logo">{{ fv.brand.title }}</div>
+            <div class="fv-subtitle">Haute Couture &amp; Luxury Goods</div>
+          </div>
+          <div class="fv-grid">
+            {% if fv.visibleBlocks.brand %}<div class="fv-col"><h4 class="fv-col-heading">Maison</h4><p style="font-size:13px;opacity:0.7;letter-spacing:1px;line-height:1.8">{{ fv.brand.description }}</p>{% if fv.visibleBlocks.socials %}<div class="fv-social-links">{% for s in fv.socials %}{% if s[1] != blank and s[1] != '#' %}<a href="{{ s[1] }}" class="fv-social-link">{{ s[0] | upcase | slice: 0, 2 }}</a>{% endif %}{% endfor %}</div>{% endif %}</div>{% endif %}
+            {% if fv.visibleBlocks.quickLinks %}<div class="fv-col"><h4 class="fv-col-heading">Boutique</h4><ul class="fv-menu">{% for l in fv.links.quickLinks %}<li><a href="{{ l.url }}" style="color:var(--fv-text)">{{ l.label }}</a></li>{% endfor %}</ul></div>{% endif %}
+            {% if fv.visibleBlocks.supportLinks %}<div class="fv-col"><h4 class="fv-col-heading">Services</h4><ul class="fv-menu">{% for l in fv.links.supportLinks %}<li><a href="{{ l.url }}" style="color:var(--fv-text)">{{ l.label }}</a></li>{% endfor %}</ul></div>{% endif %}
+            {% if fv.visibleBlocks.newsletter %}
+              <div class="fv-col">
+                <h4 class="fv-col-heading">Subscription</h4>
+                <p style="font-size:12px;opacity:0.6;letter-spacing:1px">{{ fv.newsletter.subtitle }}</p>
+                <div class="fv-newsletter-form" style="border-bottom:1px solid #1a1a1a;padding-bottom:6px;max-width:320px">
+                  <input type="email" placeholder="{{ fv.newsletter.placeholder }}" class="fv-newsletter-input" style="border:none;color:var(--fv-text)">
+                  <button class="fv-newsletter-btn" style="background:transparent;border:none;font-size:18px">&rarr;</button>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="fv-bottom">
+            <span>&copy; {{ 'now' | date: '%Y' }} {{ fv.brand.title }} International.</span>
+            {% if fv.visibleBlocks.payments %}<div class="fv-payment-icons">{% for p in fv.payments %}{% if p[1] %}<div class="fv-payment-icon light-theme"><span style="font-size:9px;font-weight:700;text-transform:uppercase">{{ p[0] }}</span></div>{% endif %}{% endfor %}</div>{% endif %}
+          </div>
+        </div>
+      </footer>
+    {% endif %}
+
+    {%- comment -%} ====================================================
+        FOOTER 7 — ULTRA LUXURY ANIMATED (PREMIUM)
+    ==================================================== {%- endcomment -%}
+    {% if f_id == '7' %}
+      <footer class="footerverse-sandbox fv-ultra-luxury">
+        <div class="fv-container">
+          <div class="fv-glass-panel">
+            <div class="fv-grid">
+              {% if fv.visibleBlocks.brand %}<div class="fv-col"><div class="fv-logo">{{ fv.brand.title }}</div><p style="color:#9ca3af;font-size:14px;line-height:1.7">{{ fv.brand.description }}</p>{% if fv.visibleBlocks.socials %}<div class="fv-social-links">{% for s in fv.socials %}{% if s[1] != blank and s[1] != '#' %}<a href="{{ s[1] }}" class="fv-social-link">{{ s[0] | upcase | slice: 0, 2 }}</a>{% endif %}{% endfor %}</div>{% endif %}</div>{% endif %}
+              {% if fv.visibleBlocks.quickLinks %}<div class="fv-col"><h4 class="fv-col-heading">Collections</h4><ul class="fv-menu">{% for l in fv.links.quickLinks %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul></div>{% endif %}
+              {% if fv.visibleBlocks.supportLinks %}<div class="fv-col"><h4 class="fv-col-heading">Concierge</h4><ul class="fv-menu">{% for l in fv.links.supportLinks %}<li><a href="{{ l.url }}">{{ l.label }}</a></li>{% endfor %}</ul></div>{% endif %}
+              {% if fv.visibleBlocks.newsletter %}
+                <div class="fv-col">
+                  <h4 class="fv-col-heading">Join The Circle</h4>
+                  <div class="fv-newsletter-form">
+                    <input type="email" placeholder="{{ fv.newsletter.placeholder }}" class="fv-newsletter-input">
+                    <button class="fv-newsletter-btn">{{ fv.newsletter.btnText }}</button>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="fv-bottom">
+            <span>&copy; {{ 'now' | date: '%Y' }} {{ fv.brand.title }} Corp.</span>
+            {% if fv.visibleBlocks.payments %}<div class="fv-payment-icons">{% for p in fv.payments %}{% if p[1] %}<div class="fv-payment-icon"><span style="font-size:9px;font-weight:700;text-transform:uppercase">{{ p[0] }}</span></div>{% endif %}{% endfor %}</div>{% endif %}
+          </div>
+        </div>
+      </footer>
+    {% endif %}
+
+  </div>
+
+{% else %}
+
+  {%- comment -%} Fallback when no metafield is set — show minimal footer {%- endcomment -%}
+  <footer class="footerverse-sandbox fv-minimal" style="background:#1a1a1a;color:#ffffff;padding:32px 24px;text-align:center">
+    <div class="fv-container">
+      <div class="fv-logo" style="color:#818cf8;font-size:22px;font-weight:700;margin-bottom:16px">Your Store</div>
+      <p style="color:#9ca3af;font-size:13px">&copy; {{ 'now' | date: '%Y' }} Your Store. All rights reserved.</p>
+    </div>
+  </footer>
+
+{% endif %}
+
+{% if block.settings.hide_theme_footer %}
+  <style>
+    body footer.footer,
+    body .site-footer,
+    body #shopify-section-footer,
+    body footer[role="contentinfo"],
+    body .footer-section,
+    body .footer-wrapper { display: none !important; }
+  </style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "FooterVerse Embed",
+  "target": "body",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_theme_footer",
+      "label": "Hide default theme footer",
+      "default": true,
+      "info": "Hides your theme's built-in footer so only the FooterVerse footer is shown."
+    }
+  ]
+}
+{% endschema %}

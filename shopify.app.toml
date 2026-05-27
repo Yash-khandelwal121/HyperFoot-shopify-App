@@ -1,0 +1,28 @@
+# FooterVerse — Premium Footer Marketplace for Shopify
+# https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "0d9f4e3d26cc8a711c140b923b03d7ec"
+application_url = "https://shopify.com"
+embedded = true
+name = "FooterVerse"
+
+[access_scopes]
+scopes = "write_themes,read_themes"
+
+[webhooks]
+api_version = "2025-01"
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/app/uninstalled"
+  topics = [ "app/uninstalled" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/app/scopes_update"
+  topics = [ "app/scopes_update" ]
+
+[auth]
+redirect_urls = [ "https://shopify.com/api/auth" ]
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = true

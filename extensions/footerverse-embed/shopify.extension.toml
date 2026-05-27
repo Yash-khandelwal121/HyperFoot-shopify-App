@@ -1,0 +1,10 @@
+api_version = "2025-01"
+
+[[extensions]]
+type = "theme"
+name = "FooterVerse Embed"
+handle = "footerverse-embed"
+uid = "3276ca5d-0f7a-f1d1-15a5-62fa1c5e5a8bb71999cd"
+
+[extensions.development]
+  root_dir = "."
