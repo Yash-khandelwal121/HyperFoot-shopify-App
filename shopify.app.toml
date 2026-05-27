@@ -2,7 +2,7 @@
 # https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "0d9f4e3d26cc8a711c140b923b03d7ec"
-application_url = "https://shopify.com"
+application_url = "https://hyper-foot-shopify-app.vercel.app"
 embedded = true
 name = "FooterVerse"
 
@@ -21,7 +21,10 @@ api_version = "2025-01"
   topics = [ "app/scopes_update" ]
 
 [auth]
-redirect_urls = [ "https://shopify.com/api/auth" ]
+redirect_urls = [
+  "https://hyper-foot-shopify-app.vercel.app/auth/callback",
+  "https://hyper-foot-shopify-app.vercel.app/auth/shopify/callback"
+]
 
 [build]
 include_config_on_deploy = true
