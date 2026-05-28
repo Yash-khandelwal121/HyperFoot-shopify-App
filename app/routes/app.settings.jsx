@@ -4,28 +4,48 @@ import { PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM } from "../constants";
 import { getShopSettings } from "../db.helpers.server";
 
 export const loader = async ({ request }) => {
-  const { session, billing } = await authenticate.admin(request);
-  const shop = session.shop;
-
-  let activePlan = "Free";
+  // ── Auth ──
+  let session, billing;
   try {
-    const billingCheck = await billing.check({
-      plans: [PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM],
-      isTest: true,
-    });
-    if (billingCheck.hasActivePayment && billingCheck.appSubscriptions?.length > 0) {
-      activePlan = billingCheck.appSubscriptions[0].name;
-    }
+    const auth = await authenticate.admin(request);
+    session = auth.session;
+    billing = auth.billing;
   } catch (err) {
-    console.error("Billing check error on Settings:", err);
+    if (err instanceof Response) throw err;
+    console.error("[settings loader] Auth failed:", err);
+    return { shop: "", activePlan: "Free", installedFooter: "1" };
   }
 
-  const shopSettings = await getShopSettings(shop);
+  const shop = session.shop;
+
+  // ── Billing check ──
+  let activePlan = "Free";
+  if (billing) {
+    try {
+      const billingCheck = await billing.check({
+        plans: [PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM],
+        isTest: true,
+      });
+      if (billingCheck.hasActivePayment && billingCheck.appSubscriptions?.length > 0) {
+        activePlan = billingCheck.appSubscriptions[0].name;
+      }
+    } catch (err) {
+      console.error("[settings loader] Billing check error:", err);
+    }
+  }
+
+  // ── DB ──
+  let shopSettings = null;
+  try {
+    shopSettings = await getShopSettings(shop);
+  } catch (err) {
+    console.error("[settings loader] DB error:", err);
+  }
 
   return {
     shop,
     activePlan,
-    installedFooter: shopSettings.installedFooter || "1"
+    installedFooter: shopSettings?.installedFooter ?? "1",
   };
 };
 

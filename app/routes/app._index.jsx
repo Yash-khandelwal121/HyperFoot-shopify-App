@@ -6,34 +6,58 @@ import { PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM, checkPlanAccess, unlockedCou
 import { getShopSettings, updateShopSettings } from "../db.helpers.server";
 
 export const loader = async ({ request }) => {
-  const { session, billing } = await authenticate.admin(request);
-  const shop = session.shop;
-
-  // 1. Dynamic plan check via Shopify Billing API
-  let activePlan = "Free";
+  // ── Auth (Shopify re-throws Response for redirects — let that through) ──
+  let session, billing;
   try {
-    const billingCheck = await billing.check({
-      plans: [PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM],
-      isTest: true,
-    });
-    if (billingCheck.hasActivePayment && billingCheck.appSubscriptions?.length > 0) {
-      activePlan = billingCheck.appSubscriptions[0].name;
-    }
+    const auth = await authenticate.admin(request);
+    session = auth.session;
+    billing = auth.billing;
   } catch (err) {
-    console.error("Billing check error on Dashboard:", err);
+    if (err instanceof Response) throw err;
+    console.error("[dashboard loader] Auth failed:", err);
+    // Return a safe shell — page renders without crashing
+    return {
+      shop: "",
+      activePlan: "Free",
+      installedFooter: "1",
+      parsedSettings: {},
+    };
   }
 
-  // 2. Sync to local database
-  await updateShopSettings(shop, { activePlan });
+  const shop = session.shop;
 
-  // 3. Retrieve settings
-  const shopSettings = await getShopSettings(shop);
+  // ── Billing check (optional — skip if it fails) ──
+  let activePlan = "Free";
+  if (billing) {
+    try {
+      const billingCheck = await billing.check({
+        plans: [PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM],
+        isTest: true,
+      });
+      if (billingCheck.hasActivePayment && billingCheck.appSubscriptions?.length > 0) {
+        activePlan = billingCheck.appSubscriptions[0].name;
+      }
+    } catch (err) {
+      console.error("[dashboard loader] Billing check error:", err);
+      // Safe fallback: treat as Free
+    }
+  }
+
+  // ── Prisma queries (optional — skip if DB unavailable) ──
+  let shopSettings = null;
+  try {
+    await updateShopSettings(shop, { activePlan });
+    shopSettings = await getShopSettings(shop);
+  } catch (err) {
+    console.error("[dashboard loader] DB error:", err);
+    // Safe fallback: render with defaults
+  }
 
   return {
-    shop: session.shop,
+    shop,
     activePlan,
-    installedFooter: shopSettings.installedFooter || "1",
-    parsedSettings: shopSettings.parsedSettings
+    installedFooter: shopSettings?.installedFooter ?? "1",
+    parsedSettings: shopSettings?.parsedSettings ?? {},
   };
 };
 

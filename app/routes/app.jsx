@@ -5,7 +5,14 @@ import { authenticate } from "../shopify.server";
 import "../styles/premium-footers.css";
 
 export const loader = async ({ request }) => {
-  await authenticate.admin(request);
+  try {
+    await authenticate.admin(request);
+  } catch (err) {
+    // Re-throw Shopify auth redirects (they are Response objects)
+    if (err instanceof Response) throw err;
+    console.error("[app.jsx loader] Auth error:", err);
+    // Fall through — AppProvider still renders with empty key
+  }
 
   // eslint-disable-next-line no-undef
   return { apiKey: process.env.SHOPIFY_API_KEY || "" };
