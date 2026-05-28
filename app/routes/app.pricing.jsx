@@ -3,35 +3,21 @@ import { authenticate } from "../shopify.server";
 import { PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM } from "../constants";
 
 export const loader = async ({ request }) => {
-  // ── Auth ──
-  let session, billing;
-  try {
-    const auth = await authenticate.admin(request);
-    session = auth.session;
-    billing = auth.billing;
-  } catch (err) {
-    if (err instanceof Response) throw err;
-    console.error("[pricing loader] Auth failed:", err);
-    return { activePlan: "Free", shop: "", billingError: null };
-  }
-
+  const { session, billing } = await authenticate.admin(request);
   const url = new URL(request.url);
   const billingError = url.searchParams.get("billing_error");
 
-  // ── Billing check ──
   let activePlan = "Free";
-  if (billing) {
-    try {
-      const billingCheck = await billing.check({
-        plans: [PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM],
-        isTest: true,
-      });
-      if (billingCheck.hasActivePayment && billingCheck.appSubscriptions?.length > 0) {
-        activePlan = billingCheck.appSubscriptions[0].name;
-      }
-    } catch (err) {
-      console.error("[pricing loader] Billing check error:", err);
+  try {
+    const billingCheck = await billing.check({
+      plans: [PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM],
+      isTest: true,
+    });
+    if (billingCheck.hasActivePayment && billingCheck.appSubscriptions?.length > 0) {
+      activePlan = billingCheck.appSubscriptions[0].name;
     }
+  } catch (err) {
+    console.error("Billing check error on Pricing:", err);
   }
 
   return { activePlan, shop: session.shop, billingError };
