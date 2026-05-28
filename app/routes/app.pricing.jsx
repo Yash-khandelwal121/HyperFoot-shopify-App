@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData, useFetcher, useNavigate } from "react-router";
 import { authenticate } from "../shopify.server";
 import { PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM } from "../constants";
@@ -156,6 +157,7 @@ export default function Pricing() {
   const { activePlan, billingError } = useLoaderData();
   const fetcher = useFetcher();
   const navigate = useNavigate();
+  const [selectedLoadingPlan, setSelectedLoadingPlan] = useState(null);
 
   const cleanPlanName = (p) => {
     if (p.includes("Starter")) return "starter";
@@ -173,24 +175,18 @@ export default function Pricing() {
     return tiers.indexOf(plan.id) > tiers.indexOf(currentTierId) ? "Upgrade Now →" : "Downgrade";
   };
 
-  const isAnyLoading = fetcher.state !== "idle" && fetcher.formData?.get("plan");
-
   const isDisabled = (plan) => 
     plan.id === currentTierId || 
     (plan.id === "free" && currentTierId === "free") || 
-    isAnyLoading;
+    selectedLoadingPlan !== null;
 
   const handleClick = (plan) => {
     if (plan.id === "free") {
       alert("To cancel your subscription and return to Free, go to your Shopify Admin → Settings → Billing → Apps.");
-      return;
     }
-    fetcher.submit({ plan: plan.billingName }, { method: "POST" });
   };
 
-  const isLoading = (plan) =>
-    fetcher.state !== "idle" &&
-    fetcher.formData?.get("plan") === plan.billingName;
+  const isLoading = (plan) => selectedLoadingPlan === plan.billingName;
 
   const actionError = fetcher.data?.error;
   const showError = billingError || actionError;
@@ -452,44 +448,74 @@ export default function Pricing() {
               </ul>
 
               {/* CTA BUTTON */}
-              <button
-                onClick={() => !disabled && !loading && handleClick(plan)}
-                disabled={disabled || loading}
-                style={{
-                  width: '100%',
-                  padding: '13px 20px',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  fontWeight: 700,
-                  cursor: disabled || loading ? 'default' : 'pointer',
-                  border: 'none',
-                  transition: 'all 0.2s',
-                  opacity: disabled ? 0.6 : 1,
-                  background: isCurrent
-                    ? (plan.isDark ? 'rgba(255,255,255,0.08)' : '#f1f5f9')
-                    : `linear-gradient(135deg, ${plan.accentColor} 0%, ${plan.accentColor}cc 100%)`,
-                  color: isCurrent
-                    ? (plan.isDark ? '#94a3b8' : '#64748b')
-                    : '#ffffff',
-                  boxShadow: isCurrent ? 'none' : `0 4px 12px ${plan.accentColor}40`
-                }}
-                onMouseEnter={(e) => {
-                  if (!disabled && !loading) e.currentTarget.style.filter = 'brightness(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.filter = 'none';
-                }}
-              >
-                {loading ? (
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
-                    <svg className="fv-btn-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle>
-                      <path d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
-                    </svg>
-                    Redirecting to Shopify...
-                  </span>
-                ) : getButtonLabel(plan)}
-              </button>
+              {plan.id === "free" ? (
+                <button
+                  onClick={() => !disabled && handleClick(plan)}
+                  disabled={disabled}
+                  style={{
+                    width: '100%',
+                    padding: '13px 20px',
+                    borderRadius: '12px',
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    cursor: disabled ? 'default' : 'pointer',
+                    border: 'none',
+                    transition: 'all 0.2s',
+                    opacity: disabled ? 0.6 : 1,
+                    background: isCurrent
+                      ? (plan.isDark ? 'rgba(255,255,255,0.08)' : '#f1f5f9')
+                      : `linear-gradient(135deg, ${plan.accentColor} 0%, ${plan.accentColor}cc 100%)`,
+                    color: isCurrent
+                      ? (plan.isDark ? '#94a3b8' : '#64748b')
+                      : '#ffffff',
+                    boxShadow: isCurrent ? 'none' : `0 4px 12px ${plan.accentColor}40`
+                  }}
+                >
+                  {getButtonLabel(plan)}
+                </button>
+              ) : (
+                <form method="POST" onSubmit={() => setSelectedLoadingPlan(plan.billingName)}>
+                  <input type="hidden" name="plan" value={plan.billingName} />
+                  <button
+                    type="submit"
+                    disabled={disabled || loading}
+                    style={{
+                      width: '100%',
+                      padding: '13px 20px',
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: 700,
+                      cursor: disabled || loading ? 'default' : 'pointer',
+                      border: 'none',
+                      transition: 'all 0.2s',
+                      opacity: disabled ? 0.6 : 1,
+                      background: isCurrent
+                        ? (plan.isDark ? 'rgba(255,255,255,0.08)' : '#f1f5f9')
+                        : `linear-gradient(135deg, ${plan.accentColor} 0%, ${plan.accentColor}cc 100%)`,
+                      color: isCurrent
+                        ? (plan.isDark ? '#94a3b8' : '#64748b')
+                        : '#ffffff',
+                      boxShadow: isCurrent ? 'none' : `0 4px 12px ${plan.accentColor}40`
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!disabled && !loading) e.currentTarget.style.filter = 'brightness(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.filter = 'none';
+                    }}
+                  >
+                    {loading ? (
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
+                        <svg className="fv-btn-spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle>
+                          <path d="M4 12a8 8 0 018-8V0C5.37 0 0 5.37 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+                        </svg>
+                        Redirecting to Shopify...
+                      </span>
+                    ) : getButtonLabel(plan)}
+                  </button>
+                </form>
+              )}
             </div>
           );
         })}
