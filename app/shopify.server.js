@@ -23,45 +23,27 @@ const shopify = shopifyApp({
     [PLAN_STARTER]: {
       lineItems: [
         {
-          plan: {
-            appRecurringPricingDetails: {
-              interval: BillingInterval.Every30Days,
-              price: {
-                amount: 50.0,
-                currencyCode: "USD",
-              },
-            },
-          },
+          amount: 50.0,
+          currencyCode: "USD",
+          interval: BillingInterval.Every30Days,
         },
       ],
     },
     [PLAN_BUSINESS]: {
       lineItems: [
         {
-          plan: {
-            appRecurringPricingDetails: {
-              interval: BillingInterval.Every30Days,
-              price: {
-                amount: 70.0,
-                currencyCode: "USD",
-              },
-            },
-          },
+          amount: 70.0,
+          currencyCode: "USD",
+          interval: BillingInterval.Every30Days,
         },
       ],
     },
     [PLAN_PREMIUM]: {
       lineItems: [
         {
-          plan: {
-            appRecurringPricingDetails: {
-              interval: BillingInterval.Every30Days,
-              price: {
-                amount: 100.0,
-                currencyCode: "USD",
-              },
-            },
-          },
+          amount: 100.0,
+          currencyCode: "USD",
+          interval: BillingInterval.Every30Days,
         },
       ],
     },
