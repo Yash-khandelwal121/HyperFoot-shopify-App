@@ -25,10 +25,16 @@ export const loader = async ({ request }) => {
 };
 
 export const action = async ({ request }) => {
-  const { billing } = await authenticate.admin(request);
+  const { billing, session } = await authenticate.admin(request);
   const formData = await request.formData();
   const planName = formData.get("plan");
-  const returnUrl = `${new URL(request.url).origin}/app?billing_redirect=true&requested_plan=${encodeURIComponent(planName)}`;
+  
+  // Extract the store name (handle) from the myshopify.com domain
+  const shopName = session.shop.replace(".myshopify.com", "");
+  const clientId = process.env.SHOPIFY_API_KEY;
+
+  // Construct return URL to point directly to Shopify Admin's embedded app container
+  const returnUrl = `https://admin.shopify.com/store/${shopName}/apps/${clientId}/app?billing_redirect=true&requested_plan=${encodeURIComponent(planName)}`;
 
   try {
     return await billing.request({
