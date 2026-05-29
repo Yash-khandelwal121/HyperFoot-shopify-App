@@ -1102,6 +1102,9 @@ export default function PremiumLanding() {
         }}>
           © 2026 FooterVerse. All rights reserved.
         </p>
+        <p style={{ fontSize: '13px', color: '#6b7280', marginTop: '8px' }}>
+          <a href="/privacy" style={{ color: '#a855f7', textDecoration: 'none', fontWeight: 600 }}>Privacy Policy</a>
+        </p>
       </footer>
     </div>
   );
