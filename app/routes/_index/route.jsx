@@ -141,21 +141,16 @@ export default function PremiumLanding() {
         }}>
           {/* Logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
-              background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '20px',
-              fontWeight: 800,
-              color: '#fff',
-              boxShadow: '0 4px 20px rgba(168, 85, 247, 0.4)'
-            }}>
-              F
-            </div>
+            <img 
+              src="/App%20logo%202.png" 
+              alt="FooterVerse Logo" 
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '8px',
+                objectFit: 'cover'
+              }} 
+            />
             <div>
               <div style={{
                 fontSize: '18px',
