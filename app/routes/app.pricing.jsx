@@ -65,13 +65,19 @@ export const action = async ({ request }) => {
   } catch (errorOrResponse) {
     // Case 1: Shopify library threw a redirect Response — extract the URL
     if (errorOrResponse instanceof Response) {
+      // 302 Location header (standard browser redirect)
       const location = errorOrResponse.headers.get("Location");
-      if (location) {
-        return { confirmationUrl: location };
+      // 401 Reauth header (Shopify embedded fetch request redirect)
+      const reauthUrl = errorOrResponse.headers.get("X-Shopify-API-Request-Failure-Reauthorize-Url");
+      
+      const confirmationUrl = location || reauthUrl;
+      
+      if (confirmationUrl) {
+        return { confirmationUrl };
       }
       
-      // If it's a Response but no Location header (e.g. 400 Bad Request from Shopify),
-      // extract the error text and return it so we don't crash to "Handling response".
+      // If it's a Response but no Location header (e.g. actual error),
+      // extract the error text and return it.
       const errorText = await errorOrResponse.text();
       return { error: `Shopify Billing Error (${errorOrResponse.status}): ${errorText}` };
     }
