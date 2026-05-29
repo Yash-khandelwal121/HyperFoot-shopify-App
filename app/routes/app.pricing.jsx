@@ -47,11 +47,10 @@ export const action = async ({ request }) => {
     return { error: "No plan specified." };
   }
 
-  // The returnUrl is where Shopify redirects the merchant AFTER they approve
-  // billing. Must be an HTTPS URL. The app dashboard will detect billing_success=true
-  // and re-check the active plan automatically.
-  const appUrl = process.env.SHOPIFY_APP_URL || "";
-  const returnUrl = `${appUrl}/app?billing_success=true`;
+  // Construct the proper embedded return URL for Shopify Admin
+  const shopName = session.shop.replace(".myshopify.com", "");
+  const clientId = process.env.SHOPIFY_API_KEY;
+  const returnUrl = `https://admin.shopify.com/store/${shopName}/apps/${clientId}/app?billing_success=true`;
 
   try {
     // billing.request() throws a redirect Response — that is by design.
@@ -61,8 +60,8 @@ export const action = async ({ request }) => {
       returnUrl,
     });
 
-    // Normally never reached because billing.request always throws
-    return { error: "Billing request did not redirect as expected. Please try again." };
+    // If it resolves without throwing, it means they might already be on this plan
+    return { error: `You are already subscribed to ${planName}.` };
   } catch (errorOrResponse) {
     // Case 1: Shopify library threw a redirect Response — extract the URL
     if (errorOrResponse instanceof Response) {
@@ -70,8 +69,11 @@ export const action = async ({ request }) => {
       if (location) {
         return { confirmationUrl: location };
       }
-      // If it's a redirect but no Location header, re-throw so Remix handles it
-      throw errorOrResponse;
+      
+      // If it's a Response but no Location header (e.g. 400 Bad Request from Shopify),
+      // extract the error text and return it so we don't crash to "Handling response".
+      const errorText = await errorOrResponse.text();
+      return { error: `Shopify Billing Error (${errorOrResponse.status}): ${errorText}` };
     }
 
     // Case 2: It's an actual error object

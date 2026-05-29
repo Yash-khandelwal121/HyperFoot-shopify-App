@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLoaderData, useNavigate } from "react-router";
+import { useLoaderData, useNavigate, useFetcher } from "react-router";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { authenticate } from "../shopify.server";
 import { PLAN_STARTER, PLAN_BUSINESS, PLAN_PREMIUM, checkPlanAccess, unlockedCount } from "../constants";
@@ -137,6 +137,18 @@ export default function Index() {
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   const [showBillingBanner, setShowBillingBanner] = useState(!!billingSuccess);
+  
+  const fetcher = useFetcher();
+
+  // Handle direct billing upgrades from the dashboard (bypassing pricing page)
+  useEffect(() => {
+    if (fetcher.data?.confirmationUrl) {
+      shopify.open(fetcher.data.confirmationUrl);
+    }
+    if (fetcher.data?.error) {
+      shopify.toast.show(fetcher.data.error, { isError: true, duration: 5000 });
+    }
+  }, [fetcher.data, shopify]);
 
   // Show a toast notification when the merchant returns from billing approval.
   // shopify.toast is the App Bridge way to show embedded notifications.
@@ -862,12 +874,12 @@ export default function Index() {
                       }}
                       onClick={() => navigate(`/app/templates/${tpl.id}`)}
                       onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.borderColor = '#cbd5e1'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
-                    >
-                      👁️ Preview
-                    </button>
-                    {isUnlocked ? (
-                      <button 
+                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                      >
+                        👁️ Preview
+                      </button>
+                      {isUnlocked ? (
+                        <button 
                         style={{
                           flex: 1,
                           backgroundColor: '#4f46e5',
@@ -892,30 +904,39 @@ export default function Index() {
                         ⚡ Customize
                       </button>
                     ) : (
-                      <button 
-                        style={{
-                          flex: 1,
-                          backgroundColor: '#ef4444',
-                          color: '#ffffff',
-                          border: 'none',
-                          padding: '10px 12px',
-                          borderRadius: '10px',
-                          fontWeight: 700,
-                          fontSize: '13px',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '4px',
-                          boxShadow: '0 4px 12px rgba(239, 68, 68, 0.15)'
-                        }}
-                        onClick={() => navigate('/app/pricing')}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#dc2626'}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ef4444'}
-                      >
-                        👑 Unlock
-                      </button>
+                      <fetcher.Form method="POST" action="/app/pricing" style={{ flex: 1, display: 'flex' }}>
+                        <input 
+                          type="hidden" 
+                          name="plan" 
+                          value={tpl.tier === 'Premium Plan' ? PLAN_PREMIUM : tpl.tier === 'Business Plan' ? PLAN_BUSINESS : PLAN_STARTER} 
+                        />
+                        <button 
+                          type="submit"
+                          disabled={fetcher.state !== 'idle'}
+                          style={{
+                            width: '100%',
+                            backgroundColor: '#ef4444',
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '10px 12px',
+                            borderRadius: '10px',
+                            fontWeight: 700,
+                            fontSize: '13px',
+                            cursor: fetcher.state !== 'idle' ? 'default' : 'pointer',
+                            transition: 'all 0.2s',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '4px',
+                            boxShadow: '0 4px 12px rgba(239, 68, 68, 0.15)',
+                            opacity: fetcher.state !== 'idle' ? 0.7 : 1
+                          }}
+                          onMouseEnter={(e) => { if(fetcher.state === 'idle') e.currentTarget.style.backgroundColor = '#dc2626'; }}
+                          onMouseLeave={(e) => { if(fetcher.state === 'idle') e.currentTarget.style.backgroundColor = '#ef4444'; }}
+                        >
+                          {fetcher.state !== 'idle' ? 'Opening...' : '👑 Unlock'}
+                        </button>
+                      </fetcher.Form>
                     )}
                   </div>
                 </div>
