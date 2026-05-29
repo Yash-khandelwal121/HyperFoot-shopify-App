@@ -27,6 +27,9 @@ export default function Auth() {
   return (
     <AppProvider embedded={false}>
       <s-page>
+        <div style={{ textAlign: "center", marginBottom: "2rem", marginTop: "2rem" }}>
+          <img src="/App%20logo%202.png" alt="FooterVerse Logo" style={{ maxWidth: "200px", borderRadius: "12px" }} />
+        </div>
         <Form method="post">
           <s-section heading="Log in">
             <s-text-field
