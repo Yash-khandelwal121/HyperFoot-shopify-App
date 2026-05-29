@@ -130,7 +130,7 @@ const TEMPLATES = [
 ];
 
 export default function Index() {
-  const { activePlan, installedFooter, shop, billingSuccess } = useLoaderData();
+  const { activePlan, installedFooter, billingSuccess } = useLoaderData();
   const shopify = useAppBridge();
   const navigate = useNavigate();
 
@@ -242,7 +242,7 @@ export default function Index() {
             Storefront Extensions
           </span>
           <h1 style={{ fontSize: '40px', fontWeight: 800, margin: '0 0 16px 0', letterSpacing: '-1px', lineHeight: '1.15' }}>
-            Elevate Your Store's Footer Experience
+            Elevate Your Store&apos;s Footer Experience
           </h1>
           <p style={{ fontSize: '16px', color: '#94a3b8', margin: '0 0 28px 0', maxWidth: '600px', lineHeight: '1.6' }}>
             Choose from a collection of premium, mobile-responsive footer templates styled to look like world-class SaaS, agency, and luxury retail websites. Toggle designs instantly with zero coding.
@@ -807,15 +807,25 @@ export default function Index() {
                   )}
 
                   {/* Hover Quick Preview Action Overlay */}
-                  <div 
+                  <button 
+                    type="button"
                     className="fv-quick-preview-overlay"
                     onClick={() => navigate(`/app/templates/${tpl.id}`)}
+                    style={{
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontFamily: 'inherit'
+                    }}
                   >
                     <div className="fv-quick-preview-btn">
                       <span>👁️</span>
                       <span>Quick Preview {!isUnlocked && " (🔒 Preview)"}</span>
                     </div>
-                  </div>
+                  </button>
                 </div>
 
                 {/* Card Info & Actions */}

@@ -311,7 +311,7 @@ export default function PremiumLanding() {
             }}>
               <Form method="post" action="/auth/login">
                 <div style={{ marginBottom: '24px' }}>
-                  <label style={{
+                  <label htmlFor="shop-input" style={{
                     display: 'block',
                     fontSize: '14px',
                     fontWeight: 700,
@@ -323,6 +323,7 @@ export default function PremiumLanding() {
                     ENTER YOUR SHOPIFY STORE
                   </label>
                   <input
+                    id="shop-input"
                     type="text"
                     name="shop"
                     value={shopDomain}
@@ -903,7 +904,7 @@ export default function PremiumLanding() {
               marginBottom: '40px',
               lineHeight: 1.7
             }}>
-              Join thousands of Shopify merchants who've upgraded their store's footer experience. Start your free trial today.
+              Join thousands of Shopify merchants who&apos;ve upgraded their store&apos;s footer experience. Start your free trial today.
             </p>
 
             <div style={{

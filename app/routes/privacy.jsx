@@ -70,7 +70,7 @@ export default function PrivacyPolicy() {
           Last updated: <strong style={{ color: '#c4b5fd' }}>May 29, 2026</strong>
         </p>
         <p style={{ color: '#94a3b8', fontSize: '15px', maxWidth: '600px', margin: '0 auto' }}>
-          This Privacy Policy describes how FooterVerse ("we", "us", or "our") collects, uses, and shares information about you when you use our Shopify application.
+          This Privacy Policy describes how FooterVerse (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, and shares information about you when you use our Shopify application.
         </p>
       </div>
 
@@ -113,7 +113,7 @@ export default function PrivacyPolicy() {
           <Section number="3" title="Sharing of Information">
             <p>We do <strong>not</strong> sell, rent, or trade your personal information. We may share data only in these limited circumstances:</p>
             <ul>
-              <li><strong>Shopify:</strong> Our app operates within the Shopify platform and is bound by <a href="https://www.shopify.com/legal/privacy" target="_blank" rel="noopener noreferrer">Shopify's Privacy Policy</a>.</li>
+              <li><strong>Shopify:</strong> Our app operates within the Shopify platform and is bound by <a href="https://www.shopify.com/legal/privacy" target="_blank" rel="noopener noreferrer">Shopify&apos;s Privacy Policy</a>.</li>
               <li><strong>Service Providers:</strong> We may use trusted third-party services (e.g., hosting, analytics) that process data on our behalf under strict confidentiality agreements.</li>
               <li><strong>Legal Requirements:</strong> We may disclose information if required by law or to protect our rights and the safety of our users.</li>
             </ul>
@@ -181,7 +181,7 @@ export default function PrivacyPolicy() {
           <hr className="section-divider" />
 
           <Section number="10" title="Changes to This Policy">
-            <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page. We encourage you to review this policy periodically. Continued use of FooterVerse after changes constitutes your acceptance of the updated policy.</p>
+            <p>We may update this Privacy Policy from time to time. When we do, we will update the &quot;Last updated&quot; date at the top of this page. We encourage you to review this policy periodically. Continued use of FooterVerse after changes constitutes your acceptance of the updated policy.</p>
           </Section>
 
           <hr className="section-divider" />

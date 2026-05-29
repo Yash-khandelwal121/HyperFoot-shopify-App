@@ -547,6 +547,11 @@ export default function CustomizeFooter() {
 
   const tplInfo = TEMPLATE_INFO[String(templateId)] || { name: `Footer #${templateId}`, tags: [], tier: "", tierColor: "#64748b" };
 
+  const currentNum = parseInt(templateId, 10) || 1;
+  const totalTemplates = Object.keys(TEMPLATE_INFO).length;
+  const prevId = currentNum > 1 ? String(currentNum - 1) : String(totalTemplates);
+  const nextId = currentNum < totalTemplates ? String(currentNum + 1) : "1";
+
   // Local customize states
   const [settings, setSettings] = useState({
     ...defaultFooterSettings,
@@ -1121,8 +1126,9 @@ export default function CustomizeFooter() {
                     { key: 'logoUrl', label: 'Logo Image URL', placeholder: 'https://yourstore.com/logo.png', type: 'text' },
                   ].map(({ key, label, placeholder }) => (
                     <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginBottom: '12px' }}>
-                      <label style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.4px' }}>{label}</label>
+                      <label htmlFor={`brand-${key}`} style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.4px' }}>{label}</label>
                       <input
+                        id={`brand-${key}`}
                         type="text"
                         value={settings.brand[key]}
                         onChange={(e) => handleBrandChange(key, e.target.value)}
@@ -1134,8 +1140,9 @@ export default function CustomizeFooter() {
                     </div>
                   ))}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Brand Tagline</label>
+                    <label htmlFor="brand-description" style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Brand Tagline</label>
                     <textarea
+                      id="brand-description"
                       value={settings.brand.description}
                       onChange={(e) => handleBrandChange('description', e.target.value)}
                       rows="3"
@@ -1155,8 +1162,9 @@ export default function CustomizeFooter() {
                     { key: 'btnText', label: 'Button Label', placeholder: 'Subscribe' },
                   ].map(({ key, label, placeholder }) => (
                     <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginBottom: '12px' }}>
-                      <label style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.4px' }}>{label}</label>
+                      <label htmlFor={`newsletter-${key}`} style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.4px' }}>{label}</label>
                       <input
+                        id={`newsletter-${key}`}
                         type="text"
                         value={settings.newsletter[key]}
                         onChange={(e) => handleNewsletterChange(key, e.target.value)}
@@ -1375,7 +1383,8 @@ export default function CustomizeFooter() {
           )}
 
           {/* Scroll to footer hint — floating pill */}
-          <div
+          <button
+            type="button"
             onClick={() => footerRef.current?.scrollIntoView({ behavior: 'smooth' })}
             style={{
               position: 'absolute',
@@ -1398,13 +1407,15 @@ export default function CustomizeFooter() {
               border: '1px solid rgba(255,255,255,0.1)',
               whiteSpace: 'nowrap',
               userSelect: 'none',
-              transition: 'opacity 0.2s'
+              transition: 'opacity 0.2s',
+              fontFamily: 'inherit',
+              outline: 'none'
             }}
             onMouseEnter={(e) => e.currentTarget.style.opacity = '0.75'}
             onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
           >
             <span className="fv-scroll-hint-arrow">↓</span> Jump to Footer
-          </div>
+          </button>
 
           {/* Sticky/Floating action CTA in viewport container */}
           <div style={{

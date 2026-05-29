@@ -49,6 +49,7 @@ export const action = async ({ request }) => {
 
   // Construct the proper embedded return URL for Shopify Admin
   const shopName = session.shop.replace(".myshopify.com", "");
+  // eslint-disable-next-line no-undef
   const clientId = process.env.SHOPIFY_API_KEY;
   const returnUrl = `https://admin.shopify.com/store/${shopName}/apps/${clientId}/app?billing_success=true`;
 
@@ -367,7 +368,7 @@ export default function Pricing() {
           letterSpacing: "-1px",
           lineHeight: 1.15,
         }}>
-          Invest in Your Store's First Impression
+          Invest in Your Store&apos;s First Impression
         </h1>
         <p style={{ fontSize: "16px", color: "#94a3b8", maxWidth: "560px", margin: "0 auto 28px", lineHeight: 1.7 }}>
           Unlock beautifully crafted, conversion-ready footer templates that give your store a world-class look instantly.
@@ -689,7 +690,7 @@ export default function Pricing() {
           Need help choosing a plan?
         </h3>
         <p style={{ fontSize: "14px", color: "#94a3b8", margin: "0 0 24px 0" }}>
-          Browse all 7 live footer previews to decide what's right for your brand.
+          Browse all 7 live footer previews to decide what&apos;s right for your brand.
         </p>
         <button
           onClick={() => navigate("/app")}

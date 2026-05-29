@@ -359,7 +359,7 @@ export default function FooterRenderer({ templateId = '1', settings = defaultFoo
       <footer className="footerverse-sandbox fv-agency" style={themeStyles}>
         <div className="fv-container">
           <div className="fv-cta-row">
-            <h2 className="fv-cta-title">Let's create something remarkable together.</h2>
+            <h2 className="fv-cta-title">Let&apos;s create something remarkable together.</h2>
             <button className="fv-cta-btn">Get In Touch</button>
           </div>
           <div className="fv-grid">

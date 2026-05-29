@@ -123,7 +123,7 @@ export default function Settings() {
             Activate Your Footer on Storefront
           </h1>
           <p style={{ fontSize: '15px', color: '#94a3b8', margin: 0, maxWidth: '520px', lineHeight: 1.6 }}>
-            FooterVerse uses Shopify's native Theme App Extensions for zero-code, zero-bloat storefront integration.
+            FooterVerse uses Shopify&apos;s native Theme App Extensions for zero-code, zero-bloat storefront integration.
           </p>
         </div>
       </div>
@@ -169,7 +169,7 @@ export default function Settings() {
 
           <StepCard number="2" title="Open the Shopify Theme Customizer" color="#0891b2">
             <p style={{ fontSize: '13px', color: '#475569', margin: '0 0 14px 0', lineHeight: 1.6 }}>
-              Click the button below to deep-link directly into your active Shopify theme's <strong>App Embeds</strong> section. No need to manually navigate through Shopify Admin.
+              Click the button below to deep-link directly into your active Shopify theme&apos;s <strong>App Embeds</strong> section. No need to manually navigate through Shopify Admin.
             </p>
             <button
               onClick={() => window.open(themeCustomizerUrl, '_blank')}
@@ -213,7 +213,7 @@ export default function Settings() {
               <span>⚡</span> How FooterVerse Avoids Theme Bloat
             </h3>
             <p style={{ fontSize: '13px', color: '#475569', margin: 0, lineHeight: 1.7 }}>
-              Unlike generic footer apps that inject thousands of lines of raw HTML into your theme files, FooterVerse leverages Shopify's newest <strong>Theme App Extension</strong> standard. Our lightweight Liquid block renders entirely server-side, suppresses your theme's native footer, and leaves <strong>zero residual code</strong> on uninstall.
+              Unlike generic footer apps that inject thousands of lines of raw HTML into your theme files, FooterVerse leverages Shopify&apos;s newest <strong>Theme App Extension</strong> standard. Our lightweight Liquid block renders entirely server-side, suppresses your theme&apos;s native footer, and leaves <strong>zero residual code</strong> on uninstall.
             </p>
           </div>
         </div>
