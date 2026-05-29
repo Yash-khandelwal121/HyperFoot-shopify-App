@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { authenticate } from "../shopify.server";
@@ -9,7 +9,18 @@ export const loader = async ({ request }) => {
   const { session, billing } = await authenticate.admin(request);
   const shop = session.shop;
 
+  // Detect return from Shopify billing approval page.
+  // After the merchant approves billing, Shopify redirects back to:
+  //   <SHOPIFY_APP_URL>/app?billing_success=true
+  // We log this so it's clear in server logs, then re-check billing below.
+  const url = new URL(request.url);
+  const billingSuccess = url.searchParams.get("billing_success");
+  if (billingSuccess) {
+    console.log(`[HyperFoot] Billing approval returned for shop: ${shop}`);
+  }
+
   // 1. Dynamic plan check via Shopify Billing API
+  // This always runs — on billing_success it picks up the newly activated plan.
   let activePlan = "Free";
   try {
     const billingCheck = await billing.check({
@@ -32,8 +43,9 @@ export const loader = async ({ request }) => {
   return {
     shop: session.shop,
     activePlan,
+    billingSuccess: !!billingSuccess,
     installedFooter: shopSettings.installedFooter || "1",
-    parsedSettings: shopSettings.parsedSettings
+    parsedSettings: shopSettings.parsedSettings,
   };
 };
 
@@ -118,12 +130,22 @@ const TEMPLATES = [
 ];
 
 export default function Index() {
-  const { activePlan, installedFooter, shop } = useLoaderData();
+  const { activePlan, installedFooter, shop, billingSuccess } = useLoaderData();
   const shopify = useAppBridge();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [showBillingBanner, setShowBillingBanner] = useState(!!billingSuccess);
+
+  // Show a toast notification when the merchant returns from billing approval.
+  // shopify.toast is the App Bridge way to show embedded notifications.
+  useEffect(() => {
+    if (billingSuccess) {
+      shopify.toast.show(`🎉 ${activePlan} activated successfully!`, { duration: 5000 });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getFooterName = (id) => {
     const found = TEMPLATES.find(t => t.id === String(id));
@@ -145,7 +167,38 @@ export default function Index() {
 
   return (
     <div className="fv-fadein" style={{ padding: '0 24px 40px', maxWidth: '1400px', margin: '0 auto', fontFamily: "'Inter', system-ui, sans-serif" }}>
-      
+
+      {/* BILLING SUCCESS BANNER — shown after merchant approves billing and returns */}
+      {showBillingBanner && (
+        <div style={{
+          background: 'linear-gradient(135deg, #052e16 0%, #064e3b 100%)',
+          border: '1px solid rgba(34,197,94,0.3)',
+          borderRadius: '16px',
+          padding: '16px 24px',
+          marginBottom: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '14px',
+          boxShadow: '0 4px 20px rgba(34,197,94,0.08)',
+        }}>
+          <span style={{ fontSize: '24px' }}>🎉</span>
+          <div style={{ flex: 1 }}>
+            <strong style={{ display: 'block', color: '#4ade80', fontSize: '15px', fontWeight: 800, marginBottom: '2px' }}>
+              {activePlan} Activated!
+            </strong>
+            <span style={{ color: '#86efac', fontSize: '13px' }}>
+              Your subscription is live. Enjoy your newly unlocked footer templates.
+            </span>
+          </div>
+          <button
+            onClick={() => setShowBillingBanner(false)}
+            style={{ background: 'transparent', border: 'none', color: '#4ade80', fontSize: '20px', cursor: 'pointer', padding: '0 4px', lineHeight: 1 }}
+          >
+            &times;
+          </button>
+        </div>
+      )}
+
       {/* SECTION 1 — PREMIUM HERO SECTION */}
       <div style={{
         background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)',
