@@ -223,14 +223,14 @@ export default function Pricing() {
   const [selectedLoadingPlan, setSelectedLoadingPlan] = useState(null);
   const [localError, setLocalError] = useState(null);
 
-  // When the fetcher returns a confirmationUrl, open it via App Bridge.
-  // This opens the Shopify billing approval page in the correct context.
+  // When the fetcher returns a confirmationUrl, open it in the top window.
+  // This opens the Shopify billing approval page in the parent frame.
   useEffect(() => {
     if (fetcher.data?.confirmationUrl) {
       // Reset loading state — the page is about to navigate away
       setSelectedLoadingPlan(null);
-      // Open the billing page in the Shopify Admin parent frame
-      shopify.open(fetcher.data.confirmationUrl);
+      // Open the billing page in the top window
+      window.open(fetcher.data.confirmationUrl, "_top");
     }
 
     if (fetcher.data?.error) {

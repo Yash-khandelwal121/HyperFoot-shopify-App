@@ -143,7 +143,7 @@ export default function Index() {
   // Handle direct billing upgrades from the dashboard (bypassing pricing page)
   useEffect(() => {
     if (fetcher.data?.confirmationUrl) {
-      shopify.open(fetcher.data.confirmationUrl);
+      window.open(fetcher.data.confirmationUrl, "_top");
     }
     if (fetcher.data?.error) {
       shopify.toast.show(fetcher.data.error, { isError: true, duration: 5000 });
