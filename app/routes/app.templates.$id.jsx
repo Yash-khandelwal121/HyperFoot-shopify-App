@@ -59,20 +59,25 @@ export const action = async ({ request }) => {
   const templateId = formData.get("templateId");
   const settingsJson = formData.get("settingsJson");
 
-  // Save in local SQLite
-  await updateShopSettings(shop, {
-    installedFooter: templateId,
-    settingsJson
-  });
+  try {
+    // Save in local DB (PostgreSQL on Vercel, SQLite locally)
+    await updateShopSettings(shop, {
+      installedFooter: templateId,
+      settingsJson
+    });
 
-  // Sync with Shopify Metafields
-  const parsedSettings = JSON.parse(settingsJson);
-  const synced = await syncSettingsToShopify(admin, shop, {
-    installedFooterId: templateId,
-    ...parsedSettings
-  });
+    // Sync with Shopify Metafields so the Liquid block picks up the settings
+    const parsedSettings = JSON.parse(settingsJson);
+    const synced = await syncSettingsToShopify(admin, shop, {
+      installedFooterId: templateId,
+      ...parsedSettings
+    });
 
-  return { success: true, synced };
+    return { success: true, synced };
+  } catch (err) {
+    console.error("[FooterVerse] Error saving customization:", err);
+    return { success: false, error: err.message || "Save failed. Please try again." };
+  }
 };
 
 // ==========================================================================

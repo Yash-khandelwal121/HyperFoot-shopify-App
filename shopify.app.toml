@@ -1,43 +1,43 @@
-# FooterVerse — Premium Footer Marketplace for Shopify
-# https://shopify.dev/docs/apps/tools/cli/configuration
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "0d9f4e3d26cc8a711c140b923b03d7ec"
+name = "FooterVerse"
 application_url = "https://footerverse.electrosale.shop"
 embedded = true
-name = "FooterVerse"
 
-[access_scopes]
-scopes = "write_themes,read_themes"
+[build]
+automatically_update_urls_on_dev = true
+include_config_on_deploy = true
 
 [webhooks]
 api_version = "2025-01"
-
-  [[webhooks.subscriptions]]
-  uri = "/webhooks/app/uninstalled"
-  topics = [ "app/uninstalled" ]
 
   [[webhooks.subscriptions]]
   uri = "/webhooks/app/scopes_update"
   topics = [ "app/scopes_update" ]
 
   [[webhooks.subscriptions]]
-  uri = "/webhooks/customers/redact"
-  topics = [ "customers/redact" ]
+  uri = "/webhooks/app/uninstalled"
+  topics = [ "app/uninstalled" ]
 
   [[webhooks.subscriptions]]
   uri = "/webhooks/customers/data_request"
-  topics = [ "customers/data_request" ]
+  compliance_topics = [ "customers/data_request" ]
+
+  [[webhooks.subscriptions]]
+  uri = "/webhooks/customers/redact"
+  compliance_topics = [ "customers/redact" ]
 
   [[webhooks.subscriptions]]
   uri = "/webhooks/shop/redact"
-  topics = [ "shop/redact" ]
+  compliance_topics = [ "shop/redact" ]
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_themes,write_themes"
 
 [auth]
 redirect_urls = [
   "https://footerverse.electrosale.shop/auth/callback",
   "https://footerverse.electrosale.shop/auth/shopify/callback"
 ]
-
-[build]
-include_config_on_deploy = true
-automatically_update_urls_on_dev = true

@@ -34,8 +34,12 @@ export const loader = async ({ request }) => {
     console.error("Billing check error on Dashboard:", err);
   }
 
-  // 2. Sync to local database
-  await updateShopSettings(shop, { activePlan });
+  // 2. Sync to local database (safe — DB errors must not crash the dashboard)
+  try {
+    await updateShopSettings(shop, { activePlan });
+  } catch (dbErr) {
+    console.error("[FooterVerse] DB sync error on Dashboard loader:", dbErr);
+  }
 
   // 3. Retrieve settings
   const shopSettings = await getShopSettings(shop);
